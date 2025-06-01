@@ -1,5 +1,7 @@
 ;; auction
 ;; NFT Seller can sell NFT to auction
+;; UI this has no interactive elements, just a read-only contract
+;; you must manually call each function at the command line
 
 (use-trait nft-token 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait.nft-trait)
 
@@ -24,6 +26,8 @@
 ;; data maps and vars
 ;;
 (define-map Started {nft: principal, nft-id: uint} bool)
+;; {map to store information}
+;; ex: {nft: ape, nft-id: u1 } :true
 (define-map Seller {nft: principal, nft-id: uint} principal)
 (define-map EndsAt {nft: principal, nft-id: uint} uint)
 (define-map Bids {nft: principal, nft-id: uint, bidder: principal} uint)
@@ -36,7 +40,8 @@
 (define-public (start (nft <nft-token>) (nft-id uint) (starting-bid uint) (endsAt uint)) 
     (let
         (
-            (seller tx-sender)
+            (seller tx-sender) ;; seller, owner of the NFT, can be different from the contract owner
+            ;; tx-sender is the original sender of the current transaction
             (nft-owner (try! (contract-call? nft get-owner nft-id)))
             (nft-contract (contract-of nft));; principal 
         )

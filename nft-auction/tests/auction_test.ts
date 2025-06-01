@@ -2,6 +2,17 @@
 import { Clarinet, Tx, Chain, Account, types } from 'https://deno.land/x/clarinet@v1.0.6/index.ts';
 import { assertEquals, assertNotEquals, assertStringIncludes } from 'https://deno.land/std@0.90.0/testing/asserts.ts';
 
+// test failure scenarios
+// think in terms of risk management e.g. below are some failure scenarios
+// 1. user who is not the owner of the nft tries to start an auction
+// 2. user who is not the owner of the nft tries to bid
+// 3. user who is not the owner of the nft tries to withdraw
+// 4. user who is not the owner of the nft tries to end the auction
+// 5. user who is not the auctioneer tries to place a bid
+// 6. user who is not the auctioneer tries to end the auction
+
+
+
 Clarinet.test({
     name: "A user who holds the nft asset can start an auction: sets new block height of input days and nft is transferred to contract",
     async fn(chain: Chain, accounts: Map<string, Account>) {
