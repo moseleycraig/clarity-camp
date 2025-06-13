@@ -11,6 +11,7 @@
 (define-constant err-not-token-owner (err u101))
 
 ;; Define Fungible Token (unlimited supply)
+;; No maximum supply
 (define-fungible-token clarity-coin)
 
 ;; Trait Functions
@@ -23,6 +24,11 @@
         (match memo to-print (print to-print) 0x)
         (ok true)
     )
+)
+
+(match (some "inner string")
+    inner-str (print inner-str)
+    (print "got nothing")
 )
 
 ;; the read only functions are standard output for these fungible tokens
@@ -43,6 +49,8 @@
 (define-read-only (get-token-uri)
     (ok none)
 )
+
+;; by default, the first wallet address in clarity console is the recipient
 
 (define-public (mint (amount uint) (recipient principal))
     (begin
